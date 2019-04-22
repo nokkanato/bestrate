@@ -87,8 +87,8 @@
                                         <img align="center" height="26" width="39" style="margin-left:0px;" v-bind:src="'data:image/jpeg;base64,'+ x.currency.flag" />
                                     </v-flex>
                                     <v-flex xs6>
-                                        <p v-if="x.currency.name.length < 5" @click="toggle(x)" style="cursor:pointer; text-align:left; color:gray; font-weight:500; font-size:18px;">{{x.currency.name}}</p>
-                                        <p v-if="x.currency.name.length > 5" @click="toggle(x)" style="cursor:pointer; text-align:left; color:gray; font-weight:500; font-size:18px;">{{x.currency.name.substring(0,5)}}...</p>                                    </v-flex>
+                                        <p style="cursor:pointer; text-align:left; color:gray; font-weight:500; font-size:18px;">{{x.currency.name.length > 5 ? x.currency.name : (x.currency.name.substring(0,5) + '...')}}</p>
+                                    </v-flex>
                                 </v-layout>
                             </v-flex>
                             <v-flex xs9>
@@ -106,53 +106,6 @@
                             </v-flex>
                         </v-layout>
                     </div>
-                    <v-dialog v-if="dialog === true" width="500px" style="z-index:999; border-radius: 10px;" v-model="dialog">
-                        <div style="background-color:white; border-radius:20px;">
-                            <v-layout row wrap>
-                                <v-flex xs2 >
-                                    <img height="26" width="39" style="margin-left:50px; margin-top:20px;" v-bind:src="'data:image/jpeg;base64,'+ tempDenomination.currency.flag" />
-                                </v-flex>
-                                <v-flex xs10>
-                                    <p style="margin-top:25px; font-weight:500; color:#4B4B4B;  margin-left:10px; text-align:left;">{{tempDenomination.currency.name.substring(0,30)}}</p>
-                                </v-flex>
-                                <v-flex xs1></v-flex>
-                                <v-flex xs10>
-                                    <v-divider></v-divider>
-                                </v-flex>
-                                <v-flex xs1></v-flex>
-                                <v-flex xs12 style="margin-top:20px;"></v-flex>
-                                <v-flex xs4 style="">
-                                    <p style="color:#4B4B4B;" class="center-dialog">Denomination</p>
-                                </v-flex>
-                                <v-flex xs4 style="">
-                                    <p style="color:#264089;" class="center-dialog">Buying</p>
-                                </v-flex>
-                                <v-flex xs4 style="">
-                                    <p style="color:red; " class="center-dialog">Selling</p>
-                                </v-flex>
-                                <v-flex xs4 style="">
-                                    <p style="color:#4B4B4B; text-decoration:underline;" class="center-dialog">USD</p>
-                                </v-flex>
-                                <v-flex xs4 style="">
-                                    <p style="color:#264089; text-decoration:underline;" class="center-dialog">THB</p>
-                                </v-flex>
-                                <v-flex xs4 style="">
-                                    <p style="color:red; text-decoration:underline;" class="center-dialog">THB</p>
-                                </v-flex>
-                            </v-layout>
-                            <v-layout  style="background-color:white;" row wrap v-for="(x, index) in tempDenomination.denomination" v-bind:key="index">
-                                <v-flex xs4 style="">
-                                    <p style="color:#7D7D7D; font-weight:400;" class="center-dialog" >{{x.bill}}</p>
-                                </v-flex>
-                                <v-flex xs4 style="">
-                                    <p style="color:#7D7D7D; font-weight:400;" class="center-dialog">{{x.buy}}</p>
-                                </v-flex>
-                                <v-flex xs4 style="">
-                                    <p style="color:#7D7D7D; font-weight:400;" class="center-dialog">{{x.sell}}</p>
-                                </v-flex>
-                            </v-layout>
-                        </div>
-                    </v-dialog>
                 </div>
             </v-flex>
             <v-flex xs2></v-flex>
@@ -182,11 +135,6 @@ export default {
       let el = document.getElementById(id).style
       el.textDecoration = 'underline white'
     },
-    toggle (e) {
-      this.tempDenomination = e
-      console.log(this.tempDenomination.denomination, 'fff')
-      this.dialog = !this.dialog
-    }
   },
   watch: {
     select: function () {
@@ -220,7 +168,6 @@ export default {
       items: [],
       pairItems: [],
       qrdialog: false,
-      dialog: false,
       tempDenomination: [],
       currencies: [],
       select: '',
@@ -283,13 +230,6 @@ export default {
 font-size:20px;
   font-weight:400;
 }
-.left-dialog {
-    text-align: left;
-    margin-left: 100px;
-}
-.center-dialog {
-    text-align: center;
-}
 .left {
     text-align: left;
     margin-left: 100px;
@@ -321,13 +261,6 @@ font-size:20px;
     background-color:white;
     box-shadow: 0 3px 3px rgba(0,0,0,0.25), 0 3px 3px rgba(0,0,0,0.22);
 }
-.nav {
-  list-style-type: none;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
 .nav li {
   display: inline-block;
   font-size: 20px;
