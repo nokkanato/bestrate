@@ -148,11 +148,6 @@ export default {
     mouseLeave (id) {
       let el = document.getElementById(id).style
       el.textDecoration = 'underline white'
-    },
-    toggle (e) {
-      this.tempDenomination = e
-      console.log(this.tempDenomination.denomination, 'fff')
-      this.dialog = !this.dialog
     }
   },
   mounted () {
@@ -247,13 +242,6 @@ font-size:20px;
     background-color:white;
     box-shadow: 0 3px 3px rgba(0,0,0,0.25), 0 3px 3px rgba(0,0,0,0.22);
 }
-.nav {
-  list-style-type: none;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
 .nav li {
   display: inline-block;
   font-size: 20px;

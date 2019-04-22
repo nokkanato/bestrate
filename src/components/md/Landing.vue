@@ -149,7 +149,7 @@ export default {
     mouseLeave (id) {
       let el = document.getElementById(id).style
       el.textDecoration = 'underline white'
-    },
+    }
   },
   mounted () {
     Api.getbranches(x => {
