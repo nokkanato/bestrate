@@ -82,7 +82,7 @@
                                     <img align="left" height="15" width="20" style="margin-left:10px;" v-bind:src="'data:image/jpeg;base64,'+ x.currency.flag" />
                                 </v-flex>
                                 <v-flex xs6 style="">
-                                    <p  :id="index" @click="toggle(x)" style=" text-align:center; margin-right:25px;  color:gray; font-weight:500; font-size:12px;">{{x.currency.name.substring(0,10)}}</p>
+                                    <p style=" text-align:center; margin-right:25px;  color:gray; font-weight:500; font-size:12px;">{{x.currency.name.length > 5 ? x.currency.name.substring(0,5) + '...' : x.currency.name}}</p>
                                 </v-flex>
                             </v-layout>
                         </v-flex>
