@@ -27,7 +27,7 @@
                             </v-flex>
                         </v-layout>
                     </v-flex>
-                    <v-flex class="body" xs12 style="height:100px;">
+                    <v-flex class="body-2" xs12 style="height:100px;">
                         <v-layout row wrap>
                             <v-flex xs3>
                                 <p style="margin-top:20px; font-weight:500; font-size:20px; color:#264089; text-align:right;">BEST</p>
@@ -45,7 +45,7 @@
                     </v-flex>
                 </v-layout>
                 <!-- body -->
-                <v-layout row wrap style="margin-top:10px;">
+                <v-layout row wrap style="margin-top:0px;">
                     <v-flex xs1></v-flex>
                     <v-flex xs5 style="text-align:left;">
                         <p class="underline-fake" style="color:#264089; margin-top:60px; font-size:20px; margin-bottom:0px;">Branch</p>
@@ -54,17 +54,20 @@
                         <v-select v-model="select" :items="items" style="z-index:10; width:90%; margin-left:5%;" ></v-select>
                     </v-flex>
                 </v-layout>
-                <div class="body">
+                <div class="body-3">
                     <v-layout row wrap style="background-color:#F0F0F0;">
                         <v-flex xs12 style="margin-top:20px;"></v-flex>
-                        <v-flex xs6 style="">
-                            <p class="header-row-blue underline">Currency</p>
+                        <v-flex xs3 style="">
+                            <p class="center-head-xs">Currency</p>
                         </v-flex>
                         <v-flex xs3 style="">
-                            <p class="center-head header-row-gray">Buying</p>
+                            <p class="center-head-xs">Denomination</p>
                         </v-flex>
                         <v-flex xs3 style="">
-                            <p class="center-head header-row-gray">Selling</p>
+                            <p class="center-head-xs">Buying</p>
+                        </v-flex>
+                        <v-flex xs3 style="">
+                            <p class="center-head-xs">Selling</p>
                         </v-flex>
                         <v-flex xs12 style="margin-top:50px;" v-show="rates.length === 0">
                             <h1 style="font-weight:300; color:gray;">No Currency has been issued here</h1>
@@ -72,18 +75,29 @@
                     </v-layout>
                     <!-- body -->
                     <v-layout row wrap style="" v-for="(x, index) in rates" v-bind:key="index">
-                        <v-flex xs12 style="margin-top:10px;"></v-flex>
-                        <v-flex xs2 style="height:50px;">
-                            <img height="26" width="39" style="margin-left:30px;" v-bind:src="'data:image/jpeg;base64,'+ x.currency.flag" />
+                        <v-flex xs12 style="margin-top:5px;"></v-flex>
+                        <v-flex xs3 style="border-bottom: solid 1px #4B4B4B;">
+                            <v-layout row wrap style="padding-top:5px;">
+                                <v-flex xs6 >
+                                    <img align="left" height="15" width="20" style="margin-left:10px;" v-bind:src="'data:image/jpeg;base64,'+ x.currency.flag" />
+                                </v-flex>
+                                <v-flex xs6 style="">
+                                    <p  :id="index" @click="toggle(x)" style=" text-align:center; margin-right:25px;  color:gray; font-weight:500; font-size:12px;">{{x.currency.name.substring(0,10)}}</p>
+                                </v-flex>
+                            </v-layout>
                         </v-flex>
-                        <v-flex xs4 style="height:50px;">
-                            <p @mouseleave="mouseLeave(index)" @mouseover="mouseOver(index)" :id="index" @click="toggle(x)" style=" text-align:center; margin-right:25px;  color:gray; font-weight:500; font-size:18px;">{{x.currency.name.substring(0,10)}}</p>
-                        </v-flex>
-                        <v-flex xs3 style="height:50px;">
-                            <p class="center-sub">{{x.denomination[0].buy}}</p>
-                        </v-flex>
-                        <v-flex xs3 style="height:50px;">
-                            <p class="center-sub">{{x.denomination[0].sell}}</p>
+                        <v-flex xs9>
+                            <v-layout row wrap v-for="(y, index) in x.denomination" v-bind:key="index" style="border-bottom: solid 1px #4B4B4B;">
+                                <v-flex xs4 style="padding-top:5px;">
+                                    <p class="center-sub-xs">{{y.bill}}</p>
+                                </v-flex>
+                                <v-flex xs4 style="">
+                                    <p class="center-sub-xs">{{y.buy}}</p>
+                                </v-flex>
+                                <v-flex xs4 style="">
+                                    <p class="center-sub-xs">{{y.sell}}</p>
+                                </v-flex>
+                            </v-layout>
                         </v-flex>
                     </v-layout>
                     <!-- <v-dialog  width="500px" style="z-index:999; border-radius: 10px;" v-model="qrdialog">
@@ -93,7 +107,7 @@
                                 </v-flex>
                             </v-layout>
                     </v-dialog> -->
-                   <v-dialog v-if="dialog === true" width="500px" style="z-index:999; border-radius: 10px;" v-model="dialog">
+                   <!-- <v-dialog v-if="dialog === true" width="500px" style="z-index:999; border-radius: 10px;" v-model="dialog">
                         <div style="background-color:white; border-radius:20px;">
                             <v-layout row wrap>
                                 <v-flex xs2 >
@@ -139,7 +153,7 @@
                                 </v-flex>
                             </v-layout>
                         </div>
-                    </v-dialog>
+                    </v-dialog> -->
                 </div>
             </v-flex>
             <v-flex xs12 style="margin-top:100px;"></v-flex>
@@ -161,7 +175,7 @@ export default {
         this.select = y.name
         this.rates = y.rates
         if (!this.rates) {
-          alert('ss')
+          alert('no rates found')
         }
       })
     }
@@ -239,15 +253,15 @@ export default {
   z-index:9;
   background:linear-gradient(to right, #8B0000 60%, white 50%);
 }
-.header-row-blue {
+.header-row-blue-xs {
     color: #264089;
-    font-weight: 500;
-    font-size:18px;
-    margin-left:10px;
+    font-weight: 400;
+    font-size: 12px;
+    /* margin-left: 10px; */
 }
 .header-row-gray {
   color:#565656 ;
-font-size:20px;
+  font-size:12px;
   font-weight:400;
 }
 .left-dialog {
@@ -259,19 +273,19 @@ font-size:20px;
 }
 .left {
     text-align: left;
-    margin-left: 100px;
+    margin-left: 10px;
 }
-.center-head {
+.center-head-xs {
     font-weight: 500;
     text-align: center;
     color: #565656 ;
-    font-size: 18px;
+    font-size: 11px;
 }
-.center-sub {
+.center-sub-xs {
     font-weight: 300;
     text-align: center;
     color: #565656 ;
-    font-size: 18px;
+    font-size: 12px;
 }
 .navbar-xs {
     z-index: 990;
@@ -284,7 +298,19 @@ font-size:20px;
 }
 .body {
     border-radius: 10px;
-    margin-top:50px;
+    margin-top:30px;
+    background-color:white;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.25), 0 3px 3px rgba(0,0,0,0.22);
+}
+.body-2 {
+    border-radius: 10px;
+    margin-top:10px;
+    background-color:white;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.25), 0 3px 3px rgba(0,0,0,0.22);
+}
+.body-3 {
+    border-radius: 10px;
+    margin-top:20px;
     background-color:white;
     box-shadow: 0 3px 3px rgba(0,0,0,0.25), 0 3px 3px rgba(0,0,0,0.22);
 }
